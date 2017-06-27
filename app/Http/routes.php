@@ -1,4 +1,5 @@
 <?php
+
 use Testing\Task;
 use Illuminate\Http\Request;
 
@@ -20,13 +21,13 @@ Route::get('/', function () {
 /**
  * Display All Tasks
  */
-Route::get('/', function(){
-	$tasks = Task::orderBy('created_at','asc')->get();
 
-
-	return view('tasks'.[
-	'tasks' => $tasks
-		]);
+    Route::get('/', function () {
+    $tasks = Task::orderBy('created_at','asc')->get();
+    //dd($tasks);
+    return view('tasks', [
+        'tasks' => $tasks
+    ]);
 });
 
 /**
@@ -56,5 +57,6 @@ Route::post('/task', function (Request $request) {
  * Delete An Existing Task
  */
 Route::delete('/task/{id}', function ($id) {
-    //
+    Task::findOrFail($id)->delete();
+    return redirect('/');
 });
